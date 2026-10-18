@@ -851,7 +851,7 @@ if (isDemo) $('demo-local').addEventListener('click', () => void run('Carregando
   sample['assets/images/readme.md'] += 'Mudança não suportada\n';
   sample['templates/new.twig'] = '<p>Novo</p>\n<img src="{{ \'images/demo/nova.png\' | assets_url }}" alt="">\n';
   const assets: Assets = {...base.assets, 'assets/images/demo/nova.png': base.assets?.['assets/images/example.png'] || new Uint8Array()};
-  await adoptProject({baseline: base, local: sample, localAssets: assets}, {name: 'Alterações fictícias', kind: 'demo'});
+  await adoptProject({baseline: base, local: sample, localAssets: assets}, {name: 'loja-exemplo', kind: 'demo'});
 }));
 // --- Connection -------------------------------------------------------------------------------------
 async function connect(): Promise<void> {

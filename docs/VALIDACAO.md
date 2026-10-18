@@ -1,5 +1,9 @@
 # Validação
 
+## Validação manual da 0.6.0, informada em 18/10/2026
+
+O proprietário informou que validou a 0.6.0 manualmente. A versão foi publicada em `ZIRTUNO/zirtuno-sync-yampi` como v0.6.0, a partir de `main` (`cc27b8d`), com `zirtuno-sync-yampi.zip` e o SHA-256. Depois da publicação, o link `releases/latest/download/zirtuno-sync-yampi.zip` entregou o mesmo ZIP do pacote local, com o SHA-256 conferido.
+
 ## Tela inicial e README, em 18/10/2026
 
 `npm run package` passou: TypeScript, 258 testes em 17 arquivos, build e pacote com 23 arquivos, conferidos byte a byte com a pasta `releases/zirtuno-sync-yampi/`. `npm run test:e2e` passou, agora com o clique no ícone voltando à tela inicial. Na demonstração, em tema escuro e com transparência reduzida (como no Windows do proprietário), a tela inicial mostrou **Enviar alterações**, **Baixar tema** e **Histórico e backups**; **‹ Início** apareceu fora dela; e o histórico sem envios mostrou só a frase explicativa. Os links de download do README e da instalação foram conferidos: o repositório original publica até a 0.4.0, e as versões novas estão em `ZIRTUNO/zirtuno-sync-yampi`.

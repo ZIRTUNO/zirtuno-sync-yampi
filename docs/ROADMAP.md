@@ -1,6 +1,6 @@
 # Próximas etapas
 
-**Estado em 16/10/2026:** versão 0.6.0, com as operações em segundo plano, progresso, retomada de envios interrompidos, comparação parcial e o painel por etapas, validada somente com o editor fictício. Numa loja real, a 0.5.0 criou 18 textos e enviou uma imagem, conferidos após recarregar. Próxima etapa: envio real controlado com a 0.6.0, acompanhado pelo proprietário, conferindo textos alterados, as demais imagens, o painel fechado no meio do envio, a retomada, o caminho de `assets_url` e a restauração. Histórico em [JOURNAL.md](JOURNAL.md).
+**Estado em 18/10/2026:** versão 0.6.0 publicada, com operações em segundo plano, progresso, retomada de envios interrompidos, comparação parcial e o painel por etapas. O proprietário informou que a validou manualmente; os testes automáticos usam o editor fictício. Histórico em [JOURNAL.md](JOURNAL.md) e evidências em [VALIDACAO.md](VALIDACAO.md).
 
 ## Validação controlada do adaptador real
 
