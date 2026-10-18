@@ -95,7 +95,8 @@ try {
   assert.deepEqual(await readdir(downloads), []);
   assert.ok((await worker.evaluate(() => globalThis.testRequests)).every(op => ['context', 'lock:read'].includes(op)));
   await editor.frameLocator('#test-toolbar').locator('#open').click();
-  await panel.waitForFunction(() => document.body.dataset.view === 'export');
+  await panel.waitForFunction(() => document.body.dataset.view === 'home');
+  await panel.locator('#mode-export').click(); await panel.waitForFunction(() => document.body.dataset.view === 'export');
   assert.deepEqual(await readdir(downloads), []);
   await settled(panel); await panel.screenshot({path: path.join(repository, '.cache/panel-confirm-e2e.png')});
   await panel.locator('#include-preview').click();

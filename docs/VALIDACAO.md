@@ -1,5 +1,9 @@
 # Validação
 
+## Tela inicial e README, em 18/10/2026
+
+`npm run package` passou: TypeScript, 258 testes em 17 arquivos, build e pacote com 23 arquivos, conferidos byte a byte com a pasta `releases/zirtuno-sync-yampi/`. `npm run test:e2e` passou, agora com o clique no ícone voltando à tela inicial. Na demonstração, em tema escuro e com transparência reduzida (como no Windows do proprietário), a tela inicial mostrou **Enviar alterações**, **Baixar tema** e **Histórico e backups**; **‹ Início** apareceu fora dela; e o histórico sem envios mostrou só a frase explicativa. Os links de download do README e da instalação foram conferidos: o repositório original publica até a 0.4.0, e as versões novas estão em `ZIRTUNO/zirtuno-sync-yampi`.
+
 ## Bloqueio explicado, em 17/10/2026
 
 `npm run check` passou com 258 testes em 17 arquivos; `tests/explain.test.ts` cobre a frase para um arquivo usado que mudou só na loja, em conflito, os dois juntos e a ausência de bloqueio; `tests/folder.test.ts` cobre a gravação na pasta do projeto (quebras de linha e marca de ordem de bytes mantidas, recusa quando o arquivo mudou depois da comparação, arquivo ausente não criado, caminho com `..` recusado, projeto dentro de uma pasta acima) e a leitura da pasta. `npm run test:e2e` passou.

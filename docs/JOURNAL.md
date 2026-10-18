@@ -103,3 +103,13 @@ Decisão do proprietário: além de copiar, o painel pode gravar a versão da lo
 Proteções: só por clique, num arquivo que mudou só na loja; só troca um arquivo de `tema/` que já existe e que continua como na comparação; nada é criado; quebras de linha e marca de ordem de bytes do arquivo ficam como estavam. A localização do projeto dentro da pasta escolhida passou a ser a mesma na leitura e na escrita.
 
 A demonstração passou a guardar em memória a pasta escolhida, como a extensão faz no IndexedDB; antes, ela a esquecia a cada comparação.
+
+## 18/10/2026 — Tela inicial com todas as entradas e README revisto
+
+Ao abrir a 0.6.0 na loja real, o proprietário caiu direto em **Baixar o tema** e não encontrou o resto. Causa: cada clique no ícone manda o painel aberto para a tela de download, um resto do painel antigo de uma tela só. As outras funções existiam, mas atrás da seta e do **…**.
+
+- Um clique no ícone volta à tela inicial.
+- A tela inicial ganhou **Histórico e backups**, com o último envio, no lugar da frase que apontava para o menu.
+- A seta virou **‹ Início**. Sem envios, o histórico mostra uma frase em vez de uma lista vazia.
+
+Na revisão do README, os links de download apontavam para o repositório original, cuja última versão publicada é a 0.4.0; as versões novas saem em `ZIRTUNO/zirtuno-sync-yampi`. README, INSTALACAO e o `homepage_url` do manifesto passaram a apontar para lá. O README foi reescrito em torno do uso (instalar, baixar, editar, enviar, recuperar), com o estado da validação e as limitações à vista. Duas mensagens antigas do projeto exportado também foram corrigidas: a integridade dizia que arquivos novos não são enviados, e o README do projeto dizia que cada arquivo é conferido um a um.

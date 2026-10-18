@@ -1,64 +1,51 @@
 # Zirtuno Sync Yampi
 
-Extensão independente para copiar o código do editor Yampi, trabalhar no computador e devolver os textos escolhidos com comparação e backup. O repositório público contém somente a ferramenta e exemplos fictícios; projetos e dados de lojas ficam fora dele.
+Extensão para Chrome que copia o código do tema de uma loja Yampi para o seu computador e devolve as suas alterações ao editor de código da Yampi, com comparação, backup e conferência de cada item. Desenvolvida por **Zirtuno**.
 
-**[Baixar extensão para Chrome — versão atual](https://github.com/JonathanDelmonte/yampi-virtual-store-code-extractor-synchronizer/releases/latest/download/zirtuno-sync-yampi.zip)** · [Ver release e SHA-256](https://github.com/JonathanDelmonte/yampi-virtual-store-code-extractor-synchronizer/releases/latest) · [Como instalar](docs/INSTALACAO.md)
+**[Baixar a extensão](https://github.com/ZIRTUNO/zirtuno-sync-yampi/releases/latest/download/zirtuno-sync-yampi.zip)** · [Releases e SHA-256](https://github.com/ZIRTUNO/zirtuno-sync-yampi/releases/latest) · [Instalação passo a passo](docs/INSTALACAO.md)
 
-Extraia o ZIP em uma pasta fixa. Abra `chrome://extensions`, ative **Modo do desenvolvedor**, clique em **Carregar sem compactação** e selecione a pasta que contém `manifest.json`. O download **Source code** do GitHub não é a extensão pronta. Se ela já estiver instalada, atualize os arquivos na mesma pasta e clique em **Recarregar** no cartão.
+Versão do código: **0.6.0**. O link baixa a última versão publicada em Releases. Antes de usar numa loja de cliente, leia o [estado da validação](#estado-da-validação).
 
-## Versão 0.6.0
+## O que ela faz
 
-A 0.6.0 resolve o que o primeiro envio real mostrou: o envio parava quando o painel fechava, demorava e não dizia quanto faltava.
+- **Baixar o tema.** Copia os arquivos do editor de código (textos e imagens) num ZIP pronto para editar no VS Code, com uma prévia local da vitrine. Só lê: nada muda na loja.
+- **Enviar alterações.** Compara o seu projeto com a cópia original e com a loja de agora e mostra o que vai mudar. Envia pelo próprio editor da Yampi: salva os arquivos alterados, cria os arquivos novos e envia as imagens novas. Cada item é conferido na Yampi depois de recarregar o editor.
+- **Proteger a loja.** O backup é baixado antes da primeira mudança. O envio para no primeiro erro, e uma alteração feita na loja depois da sua cópia só é sobrescrita se você escolher. A extensão nunca publica, exclui ou renomeia.
+- **Seguir em segundo plano.** Fechar o painel ou trocar de aba não interrompe nada. O ícone mostra o progresso, e um envio interrompido (aba fechada, erro, extensão atualizada) continua de onde parou.
+- **Desfazer.** Histórico de envios por loja, backups e restauração que preserva o que mudou depois.
 
-- **Continua com o painel fechado.** Baixar, comparar e enviar rodam num documento da própria extensão, fora do painel. Trocar de aba ou fechar o painel não interrompe nada; o ícone mostra a porcentagem e, no fim, um aviso do sistema diz se terminou ou parou. Reabrir o painel mostra o andamento ou o resultado.
-- **Progresso claro.** Porcentagem ponderada pelo trabalho real de cada etapa, tempo restante estimado pelo ritmo recente, a etapa e o arquivo em andamento e um registro do que já foi conferido.
-- **Mais rápido, com a mesma conferência.** O editor deixa de ser recarregado duas vezes por arquivo. Os arquivos criados e as imagens enviadas são conferidos em grupo, depois de uma única recarga; cada texto continua salvo e conferido após recarregar, antes do próximo. A comparação relê na loja só o que o projeto mudou, não o tema inteiro.
-- **Continuar de onde parou.** Um envio interrompido (aba fechada, extensão reiniciada, erro) continua do item em que parou. O que já foi conferido não é refeito, e o item em andamento é conferido na loja antes: se alguém o alterou, o envio para.
-- **Sem recomeçar do zero.** A pasta do projeto fica lembrada (**Reler “pasta”**, com um clique), pode ser solta no painel e só `tema/` e `.yampi-sync/` são lidos, sem `node_modules`. Projeto, comparação e escolhas ficam guardados por loja. Depois de cada envio, a referência avança: o que já foi enviado não volta como conflito.
-- **Painel de um passo por vez.** Uma tela inicial com duas ações (**Enviar alterações** e **Baixar tema**) e, em cada etapa, um título, a informação que importa e uma ação principal na barra de baixo. Conflitos mostram as linhas alteradas lado a lado com a loja. Histórico, backups e restauração ficam no menu.
+## Instalar
 
-A 0.5.1 corrigiu a conferência das imagens enviadas: o editor da Yampi mostra cada imagem guardada como endereço `data:`, e a política de segurança da página bloqueia `fetch()` nesse endereço. A extensão decodifica a imagem diretamente.
+1. Baixe `zirtuno-sync-yampi.zip` e extraia numa pasta fixa. Não carregue o ZIP direto; o download **Source code** do GitHub não é a extensão pronta.
+2. Abra `chrome://extensions`, ative **Modo do desenvolvedor**, clique em **Carregar sem compactação** e selecione a pasta que contém `manifest.json`.
+3. Fixe o ícone da extensão na barra do Chrome. É preciso o Chrome 120 ou posterior.
 
-**Edição local e sincronização do código da sua loja Yampi.** A 0.5.0 faz o envio inteiro sozinha. Você escolhe a pasta do projeto, confere um resumo e confirma. A extensão cria os textos novos pelo **Adicionar arquivo** do próprio editor, envia as imagens novas pelo envio de imagens da Yampi e salva os arquivos alterados. Cada item é conferido na Yampi depois de recarregar o editor, antes do próximo. Imagens em subpastas vão direto para `assets/images`, porque a Yampi não aceita subpastas, e as referências nos arquivos enviados são ajustadas. O painel mostra só o que precisa da sua decisão, como um arquivo alterado na loja depois da sua cópia. [Contrato do envio](docs/SPEC.md).
+Para atualizar, extraia a versão nova sobre a mesma pasta e clique em **Recarregar** no cartão da extensão. Usar outra pasta cria outra instalação e separa os backups. Não atualize no meio de um envio: a operação para, sem desfazer nada, e pode continuar depois. [Instruções completas](docs/INSTALACAO.md).
 
-A 0.4.0 corrige o fluxo de ponta a ponta medido na análise da exportação 0.3.4: uma exportação nova passa em `npm run check` e abre home, categoria e produto com seções, fontes, ícones e imagens capturados. Quando algo falta, a prévia diz exatamente o quê. [Relatório da versão](docs/RELATORIO-0.4.0.md).
+## Usar
 
-- **Contrato único.** `local-runtime/contract.mjs` transforma a captura bruta (`window.themeConfig`, `window.data`, `window.merchant`) nas variáveis do tema: `header`, `footer`, `mainSections` (seções `position` 1, na ordem de `order`), `pageConfig.data`, `customData` e `context`. A mesma função é usada pela captura, por `npm run check`, por `npm run dev` e pelos testes. Em categoria, busca e produto, `window.data.config` é a seção principal.
-- **Aliases por regra.** `get_section_file` procura `sections/<página>/<alias>.twig`, depois sem o prefixo `main_`, depois `sections/global/`. Páginas institucionais usam `sections/content/`. Um alias sem arquivo é erro explícito, com alias e página.
-- **Captura completa e anônima.** Os três objetos públicos são lidos sem cookies e sem executar a página, e gravados sem alteração em `preview/raw/`. Uma lista de bloqueio remove segredos (`token`, `session`, `password`, chaves de API…) e IDs de rastreamento. `merchant.company` mantém as chaves, com nome, documento, contatos e endereço trocados por `"redacted"`; e-mails, CPF e CNPJ também viram `"redacted"` em qualquer texto. O relatório lista as chaves que o código usa e a captura não trouxe, com o motivo.
-- **Páginas por tipo.** Primeiro uma página de cada tipo (home, categoria, produto, institucional, promoção, busca), depois o restante do orçamento. Tipos ausentes aparecem no relatório.
-- **Leituras públicas gravadas.** As coleções, banners e produtos pedidos pelas seções visíveis são lidos uma vez na API pública, sem credenciais, e reproduzidos na prévia com filtro por `id[]`, `slug` e `limit`. Uma rota não gravada gera erro explícito com o caminho.
-- **Assets por prioridade.** CSS servido e fontes primeiro (somente `latin` e `latin-ext`, WOFF2), depois logotipo e ícones de `$assets`, banners, produtos e o restante. Imagens são deduplicadas pela imagem subjacente: a variante exibida (por exemplo, `fit-in/600x600`) é baixada e as demais URLs viram aliases. Nenhuma URL é derivada de `@import` Sass. Fonte não capturada perde a `@font-face`; nunca aponta para uma imagem.
-- **Associação pelo CSS.** `npm run check` compila cada entrada Sass e compara com o CSS publicado capturado, normalizando a minificação. Iguais: `published-verified-by-css`; diferentes: lista das folhas divergentes.
-- **Simulador mais fiel.** Twing com a semântica de nulos do Twig PHP (`raw`, `upper`, `format`, `date`, concatenação e soma). HTML normalizado como o navegador faz antes do Vue: uma tag não fechada vira aviso com o arquivo provável. Ordem do CSS igual à de `head.twig`, com cada folha no seu `<link>` e `media`. `<body>` preservado. Somente componentes de `components.twig` são registrados. Prontidão estrutural: `__yampiLocalReady` fica falso quando falta seção, e a barra da prévia mostra seções, imagens em placeholder, fontes com erro e rotas não capturadas.
-- **Retorno seguro.** Arquivo enviado que depende de caminho que não existirá na loja (Sass, Twig, componente, imagem) fica bloqueado com o nome dos dois. Desde a 0.5.0, textos e imagens novos são criados pela extensão. Arquivos alterados que usam uns aos outros só vão juntos. Alterações só de espaço em branco aparecem separadas e podem ser descartadas. `.editorconfig` e `.vscode/settings.json` evitam que abrir e salvar gere diferença.
-- **Projeto organizado.** `local.data.json` contém só sobreposições, com escopo global, por página ou por captura. Manifesto versão 3 com ferramenta, tema, quebras de linha e `logs/` ignorado; versões 1 e 2 continuam legíveis. `.gitignore` comentado.
+Abra o editor de código da loja (`https://app.yampi.com.br/store/code-editor/`) e clique no ícone da extensão. O painel abre ao lado, na mesma aba, e não faz nada sozinho. A tela inicial tem três opções:
 
-O repositório de origem continua **JonathanDelmonte/yampi-virtual-store-code-extractor-synchronizer**. O pacote e o nome exibido no Chrome e no painel são **Zirtuno Sync Yampi** (`zirtuno-sync-yampi`), desenvolvido por **Zirtuno**. O ícone usa a logo fornecida pelo proprietário; sua versão original está em `assets/zirtuno-sync-yampi-logo.png`. [Proposta visual e nome técnico](docs/INTERFACE.md).
-
-O ícone de código informa no hover que a extensão precisa do **Editor de código da Yampi**. Fora dessa tela, o clique abre uma orientação com botão para acessar o editor na mesma aba. Dentro do editor, abre diretamente o painel de cópia e envio. Nenhuma cópia começa ao abrir o painel.
-
-| Pasta/arquivo | Uso |
+| Opção | Para quê |
 |---|---|
-| `tema/` | Código editável, copiado do editor |
-| `.yampi-sync/baseline/` e `manifest.json` | Originais, tamanhos e SHA-256 para comparar e devolver código |
-| `preview/` | Captura bruta (`raw/`), leituras públicas, recursos, manifesto e relatório |
-| `local.data.json` | Somente sobreposições da prévia (começa vazio) |
-| `local.config.json` | Templates, estilos, mapa de seções e opções de componentes |
-| `.yampi-sync/tools/` | Ferramentas portáteis para Twig/Sass/Vue 2, contrato, integridade e retorno |
+| **Enviar alterações** | Levar para a loja o que você editou no computador |
+| **Baixar tema** | Baixar uma cópia do código em ZIP |
+| **Histórico e backups** | Desfazer um envio, baixar backups e registros |
 
-A leitura confere identidade, inventário antes/depois e documento completo do CodeMirror, sob lock de leitura. Os hashes comprovam integridade. O inventário estável observado no DOM **não é uma auditoria independente da completude remota**. Logs do editor ficam fora do tema e são registrados como ignorados no manifesto.
+Cada tela tem um título que diz o estado e uma ação principal na barra de baixo. **‹ Início** volta à tela inicial, e clicar no ícone da extensão também. O botão **…**, no alto, abre o histórico e os backups em qualquer tela. Fora do editor de código, o ícone abre uma orientação com o botão **Abrir o editor de código**.
 
-## Instalar e exportar
+### Baixar o tema
 
-Use o [download direto da extensão](https://github.com/JonathanDelmonte/yampi-virtual-store-code-extractor-synchronizer/releases/latest/download/zirtuno-sync-yampi.zip), extraia o ZIP e carregue a pasta em `chrome://extensions`, com modo de desenvolvedor e **Carregar sem compactação**. Para atualizar, substitua os arquivos na mesma pasta instalada e recarregue o cartão. [Instruções completas](docs/INSTALACAO.md).
+1. Escolha **Baixar tema** e confira o nome da loja no alto do painel.
+2. Deixe **Incluir a vitrine publicada** ligado, para a prévia local ficar parecida com a loja, e clique em **Baixar ZIP**. O Chrome pede permissão para ler a vitrine; se você negar, o código é baixado com uma prévia de exemplo.
+3. Imagens, fontes e a API pública de catálogo ficam em outros endereços. O painel lista esses endereços e espera **Autorizar e terminar o ZIP**, ou **Baixar sem esses recursos**.
+4. O ZIP é baixado no fim, mesmo com o painel fechado. A tela final mostra quantos arquivos, imagens e páginas da prévia vieram, e **Mostrar o ZIP** abre a pasta do download.
 
-1. Abra `https://app.yampi.com.br/store/code-editor/` e clique no ícone. O painel abre na própria aba, sem copiar nada sozinho. Escolha **Baixar tema**.
-2. Confira a loja no alto do painel. Deixe **Incluir a vitrine publicada** ligado e clique em **Baixar ZIP**. O Chrome pede leitura da origem da vitrine. Negar permite copiar o código com prévia demonstrativa.
-3. Imagens, fontes e a API pública de catálogo ficam em outras origens. O painel lista os destinos e aguarda **Autorizar e terminar o ZIP**. **Baixar sem esses recursos** mantém as falhas no relatório. Nenhum arquivo da Yampi é editado, salvo, excluído, criado, renomeado ou publicado durante a cópia. O download continua mesmo com o painel fechado.
-4. Extraia a exportação fora deste repositório e abra a pasta ou seu `.code-workspace` no VS Code.
+Durante a cópia, nada é editado, salvo, criado, excluído, renomeado ou publicado na Yampi.
 
-Com Node.js 24, no terminal da pasta exportada:
+### Editar no computador
+
+Extraia o ZIP numa pasta própria, fora deste repositório, e abra a pasta (ou o seu `.code-workspace`) no VS Code. Com Node.js 24, no terminal dessa pasta:
 
 ```powershell
 npm ci
@@ -67,57 +54,100 @@ npm run check
 npm run dev
 ```
 
-Abra `http://127.0.0.1:5182`. As páginas capturadas abrem pelos mesmos caminhos da loja; o índice em `/__local/` lista capturas e templates sem captura. A instalação inicial de dependências usa o registro npm.
+`npm run dev` abre a prévia em `http://127.0.0.1:5182`. As páginas capturadas abrem nos mesmos caminhos da loja, e `/__local/` lista as capturas e os templates. Edite só `tema/` e mantenha `.yampi-sync/`: é com ela que a extensão compara e envia.
 
-## Captura e diagnóstico
+| Pasta ou arquivo | Conteúdo |
+|---|---|
+| `tema/` | O código do tema, para editar |
+| `.yampi-sync/baseline/` e `.yampi-sync/manifest.json` | A cópia original, com tamanhos e SHA-256, para comparar e enviar |
+| `.yampi-sync/tools/` | Ferramentas da prévia (Twig, Sass, Vue 2), integridade e retorno |
+| `preview/` | Captura da vitrine, leituras públicas, recursos, manifesto e relatório |
+| `local.data.json` | Só os ajustes que você fizer nos dados da prévia (começa vazio) |
+| `local.config.json` | Templates, estilos, mapa de seções e porta da prévia |
 
-A leitura é estática: literais, objetos, arrays e JSON/base64 declarativos. Expressões dinâmicas, getters e chamadas não são executados. HTML bruto, scripts, autenticação, checkout, cookies, pedidos e dados de clientes ficam fora do pacote. Trata-se de uma amostra visual datada, sem exportação completa do catálogo ou das configurações.
+`npm run check:integrity` confere o SHA-256 e o tamanho dos originais e lista o que mudou no projeto; com `-- --original`, falha se algo mudou. `npm run pack` gera um ZIP de retorno e lista os arquivos alterados e novos; `npm run check:integrity -- --return-zip retorno-yampi.zip` confere se esse ZIP tem exatamente o manifesto, os originais e `tema/`.
 
-PNG/JPEG/WebP/SVG, CSS e WOFF/WOFF2/TTF/OTF são validados, identificados por SHA-256 e deduplicados. URLs privadas, credenciais em URL, redirecionamentos, tipos desconhecidos e SVG ativo são recusados.
+### Enviar alterações
 
-Máximos: 8 páginas, 200 recursos, 12 MiB de recursos, 2 MiB por recurso e por página, 40 leituras públicas (4 MiB) e 15 segundos por leitura HTTP. O orçamento segue a prioridade descrita acima e o relatório mostra contagem e bytes por categoria.
+1. Escolha **Enviar alterações** e a pasta do projeto, ou solte a pasta no painel. Da segunda vez em diante, **Reler “nome da pasta”** faz isso num clique. Também vale o ZIP de `npm run pack`, em **Usar um ZIP de retorno**.
+2. A comparação começa sozinha. Ela relê na loja só o que o projeto mudou e os textos que esses arquivos usam. Depois de mudar algo no projeto, **Comparar de novo** relê a pasta escolhida; com Alt+clique, relê também o tema inteiro na loja.
+3. Confira o resumo (alterados, novos e imagens). O que precisa de você aparece em **Precisa da sua atenção**, uma linha por item, com a ação ao lado:
+   - **Arquivo que mudou na loja e no projeto:** **Comparar e escolher** mostra as linhas que mudaram. **Usar a versão do projeto** envia a sua; a da loja fica no backup.
+   - **Arquivo que usa outro que mudou só na loja:** **Ver a mudança** mostra o que mudou na loja. **Usar no projeto** grava essa versão no arquivo da sua pasta, com a sua permissão, e compara de novo; **Copiar** é para colar à mão.
+4. Clique no botão de envio (por exemplo, **Enviar 3 itens para Minha Loja**) e confirme em **Enviar agora**. O backup é baixado antes da primeira mudança. Pode fechar o painel ou trocar de aba: o envio continua, o ícone mostra a porcentagem e, com o painel fechado, um aviso do sistema diz quando terminou.
+5. No fim, **Abrir a prévia** abre o rascunho na Yampi. Gravar pelo editor muda só a prévia; os clientes veem as mudanças depois de **Publicar** na Yampi, sempre à mão. Se algo não estiver certo, use **Desfazer este envio**.
 
-`preview/report.json` separa código, configuração, contrato (aliases, seções visíveis, chaves ausentes, cobertura de templates), assets, compilação, inicialização e visual. `npm run check` grava `.cache/yampi-check.json` com seções renderizadas por página, avisos de markup e componentes e a paridade de CSS. O servidor oferece `/__local/diagnostic.json`; o navegador expõe `__yampiLocalReady` e `__yampiLocalState`. HTTP 200 não certifica inicialização ou aparência.
-
-Preços refletem a data da captura. Carrinho, checkout, pagamentos, formulários e gravações permanecem bloqueados.
-
-## Devolver e recuperar
-
-1. No editor de código da Yampi, clique no ícone e escolha **Enviar alterações**.
-2. Escolha a pasta do projeto, ou solte-a no painel. Da segunda vez em diante, **Reler “pasta”** faz isso com um clique. Em **Usar um ZIP de retorno** vale o ZIP de `npm run pack`. A comparação começa sozinha.
-3. Confira o resumo: alterados, novos e imagens. O que precisa de você aparece em **Precisa da sua atenção**, com a ação ao lado; **Comparar e escolher** mostra as linhas que mudaram. Se um arquivo usa outro que mudou só na loja, **Ver a mudança** mostra o que mudou; **Usar no projeto** grava a versão da loja nesse arquivo da sua pasta e compara de novo (ou **Copiar**, para colar à mão). **Comparar de novo** relê a pasta.
-4. Clique em **Enviar N itens** e confirme. O backup é baixado antes da primeira mudança. Pode fechar o painel ou trocar de aba: o envio continua, e o ícone mostra o progresso.
-5. No fim, **Abrir a prévia** abre o rascunho da Yampi. Se estiver tudo certo, publique na Yampi. Se não, **Desfazer este envio**.
+### O que é enviado
 
 | Situação | Resultado |
 |---|---|
-| Local mudou; loja igual ao original | Enviado |
-| Local e loja iguais | Não grava novamente |
-| Mudou só na loja | Preserva a loja |
-| Ambos mudaram de formas diferentes | Conflito: fica a versão da loja, a menos que você escolha **Usar a versão do projeto** |
-| Arquivo ausente localmente | Não exclui |
-| Texto novo (.twig, .vue, .scss) em pasta que existe na loja | Criado pela extensão e preenchido |
-| Texto novo em pasta nova, ou com nome/tipo que a Yampi recusa | Bloqueia todo o envio, com o motivo |
-| Imagem nova | Enviada para `assets/images`; de subpasta, com as referências ajustadas |
+| Mudou no projeto; a loja está como na cópia | Enviado |
+| Projeto e loja já iguais | Nada a gravar |
+| Mudou só na loja | A versão da loja fica |
+| Mudou no projeto e na loja, de formas diferentes | Conflito: fica a versão da loja, a menos que você escolha **Usar a versão do projeto** |
+| Ausente no projeto | Nada é excluído |
+| Texto novo (`.twig`, `.vue`, `.scss`) numa pasta que existe na loja | Criado pela extensão e preenchido |
+| Texto novo numa pasta nova, ou com nome que a Yampi recusa | Bloqueia todo o envio, com o motivo |
+| Imagem nova | Enviada para `assets/images`; vinda de subpasta, com as referências ajustadas |
 | Imagem existente alterada | Não enviada: a Yampi não substitui imagens |
 | `elements/scripts/components.twig` | Nunca enviado: a Yampi gera esse arquivo |
-| Depende de arquivo que não existirá na loja | Bloqueia, com o nome da dependência |
+| Usa um arquivo que não vai existir na loja | Bloqueado, com o nome do arquivo |
+| Usa um arquivo que mudou só na loja ou está em conflito | Bloqueado até você levar a mudança ao projeto ou decidir o conflito |
 | Arquivos alterados que usam uns aos outros | Enviados juntos |
-| Só espaço em branco | Separado, sem seleção inicial; pode ser descartado |
+| Diferença só de espaço em branco | Mostrada à parte, fora da seleção; pode ser descartada |
 
-Cada texto existente é relido antes de salvar. Os arquivos criados e as imagens enviadas são conferidos em grupo, depois de recarregar o editor, antes da etapa seguinte; cada texto é salvo e conferido após recarregar, antes do próximo. A operação para no primeiro erro e mantém o registro parcial; **Continuar de onde parou** retoma do item em que parou, sem refazer o que já foi conferido e sem sobrescrever o que outra pessoa alterou na loja. **Desfazer este envio** e **Restaurar este envio** (no menu) protegem alterações posteriores: arquivos criados voltam ao conteúdo inicial da Yampi, e nada é excluído. A extensão nunca publica, exclui ou renomeia. Regras completas: [SPEC.md](docs/SPEC.md).
+Nomes de textos novos aceitam letras, números, `_` e `-`. Imagens novas podem ser PNG, JPEG, WebP ou SVG de até 2 MB.
 
-O projeto local não precisa mudar por causa das imagens: a prévia continua usando as subpastas, e só a loja recebe os caminhos em `assets/images`. Uma referência montada em tempo de execução (por exemplo, `'images/hero/' ~ nome`) não pode ser ajustada e bloqueia o arquivo, com o motivo.
+### Como o envio protege a loja
 
-**Validação real parcial (16/10/2026).** Numa loja real, **Adicionar arquivo** criou 18 textos novos (Twig, Vue e SCSS) em pastas existentes, cada um conferido após recarregar, e o envio de imagens gravou uma imagem em `assets/images` com os mesmos bytes do projeto. A conferência dessa imagem parou o envio na 0.5.0 e foi corrigida na 0.5.1. Ainda sem validação real: gravação dos textos alterados, envio das demais imagens, o caminho que `assets_url` gera em `assets/images` e a restauração. **A 0.6.0 foi validada só com o editor fictício:** a execução em segundo plano, o painel fechado no meio do envio, a retomada, a conferência em grupo de criações e imagens e a comparação parcial ainda não rodaram numa loja real. Numa aba em segundo plano o navegador desacelera a página; o envio continua, mais devagar. No primeiro envio real, acompanhe o painel e confira tudo em **Ver prévia** antes de publicar. Sem transação atômica do servidor, uma edição externa entre ler e salvar ainda pode ocorrer: não edite simultaneamente nem troque de loja ou tema durante o envio. Testes de gravação em loja real exigem ambiente e arquivo expressamente escolhidos pelo proprietário.
+- **Antes de gravar:** o editor é recarregado, os arquivos que vão mudar são relidos e precisam estar como na comparação, e os caminhos novos precisam continuar livres. Qualquer diferença para tudo antes da primeira gravação.
+- **Backup:** fica guardado no navegador e é baixado antes da primeira mudança. Sem ele, nada é gravado.
+- **Ordem:** primeiro os textos novos, criados pelo **Adicionar arquivo** do editor; depois as imagens, pelo envio de imagens da Yampi. Cada grupo é conferido depois de recarregar o editor. Em seguida, cada texto é salvo, o editor é recarregado e o texto é relido antes do próximo. No fim, todos são relidos.
+- **Erro:** o envio para no item em andamento e guarda o registro. **Continuar de onde parou** não refaz o que já foi conferido e para se alguém mudou um arquivo na loja durante a interrupção.
+- **Desfazer:** volta só o que continua como foi enviado; o que mudou depois aparece como conflito. Arquivos criados voltam ao conteúdo inicial da Yampi; nada é excluído.
+- **Nunca:** publicar, excluir, renomear, criar pastas ou substituir imagens.
 
-`npm run pack` também informa arquivos modificados e adicionados. `npm run check:integrity -- --return-zip retorno-yampi.zip` confere se o ZIP tem exatamente manifesto, originais e `tema/`, com os mesmos hashes; `-- --original` confirma que nada mudou.
+Regras completas em [SPEC.md](docs/SPEC.md).
 
-Na prévia local, `assets_url` aponta para `tema/assets/`; o caminho de produção continua sem validação.
+**Imagens.** A Yampi guarda imagens só direto em `assets/images`. Uma imagem nova de subpasta recebe um nome lá, e toda referência literal ao caminho antigo é ajustada no que vai para a loja; o seu projeto não muda, e a prévia continua usando as subpastas. Um caminho montado em tempo de execução, como `'images/hero/' ~ nome`, não pode ser ajustado e bloqueia o arquivo, com o motivo.
+
+### Histórico, backups e restauração
+
+**Histórico e backups**, na tela inicial ou no **…**, lista os envios desta loja. Para cada um, **Restaurar este envio** prepara a volta ao estado anterior (com a mesma revisão e confirmação de um envio), **Baixar o backup** baixa os textos de antes do envio e **Baixar o registro** baixa o que foi feito, item a item. **Apagar os dados locais** remove deste navegador as cópias originais, o projeto carregado e os backups guardados; os ZIPs já baixados continuam no computador.
+
+## Estado da validação
+
+- **Editor fictício:** baixar, comparar, enviar, retomar e restaurar, em testes automáticos que reproduzem a marcação do editor real, incluindo o painel fechado no meio do envio. A gravação na pasta do projeto foi testada com uma pasta simulada. [Resultados](docs/VALIDACAO.md).
+- **Loja real (0.5.0, 16/10/2026):** **Adicionar arquivo** criou 18 textos novos (Twig, Vue e SCSS), cada um conferido após recarregar; uma imagem foi enviada para `assets/images` com os mesmos bytes do projeto; o backup veio antes da primeira gravação; e o envio parou no primeiro erro com o registro guardado. Esse erro, na conferência da imagem, foi corrigido na 0.5.1.
+- **Ainda sem validação real:** a gravação de textos alterados, as demais imagens, o caminho que `assets_url` gera em `assets/images` e a restauração. Também tudo o que a 0.6.0 acrescentou: execução em segundo plano, painel fechado no meio do envio, retomada, conferência em grupo, comparação parcial e a gravação na pasta do projeto pelo seletor de pastas do Chrome.
+- **Captura da vitrine:** a captura da 0.4.0 ainda não tem execução registrada numa vitrine real. Também sem validação: o formato da API pública além de coleções, banners e produtos, e as regras exatas do minificador da plataforma.
+
+No primeiro envio real, acompanhe o painel e confira tudo na prévia da Yampi antes de publicar. Testes de gravação numa loja real dependem de ambiente e arquivo escolhidos pelo proprietário.
+
+### Limitações
+
+- A Yampi não oferece transação no servidor: uma edição feita por outra pessoa entre a leitura e o salvamento ainda pode acontecer. Não edite a loja ao mesmo tempo nem troque de loja ou de tema durante um envio.
+- Com a aba do editor em segundo plano, o navegador desacelera a página: o envio continua, mais devagar. Fechar a aba do editor cancela a operação.
+- A extensão exige o Chrome 120 ou posterior; outros navegadores não foram testados. A prévia local usa Vue 2, fora de manutenção: use projetos confiáveis e mantenha o servidor em `127.0.0.1`.
+- Na prévia local, `assets_url` aponta para `tema/assets/`; o caminho de produção ainda não foi conferido.
+- A prévia é uma amostra datada da vitrine (preços da data da captura). Não exporta o catálogo nem as configurações da loja, e carrinho, checkout, pagamentos, formulários e gravações ficam bloqueados.
+
+## Prévia local e captura da vitrine
+
+A captura lê os objetos públicos da vitrine (`window.themeConfig`, `window.data`, `window.merchant`) de forma estática: só literais, objetos, listas e JSON declarativo, sem executar a página e sem cookies. O resultado fica sem alteração em `preview/raw/`. Uma lista de bloqueio remove segredos (`token`, `session`, `password`, chaves de API) e IDs de rastreamento; nome, documento, contatos e endereço da empresa, e-mails, CPF e CNPJ viram `"redacted"`.
+
+- **Contrato único.** `local-runtime/contract.mjs` transforma a captura nas variáveis do tema (`header`, `footer`, `mainSections`, `pageConfig.data`, `customData`, `context`). A mesma função serve a captura, `npm run check`, `npm run dev` e os testes.
+- **Seções por alias.** `get_section_file` procura `sections/<página>/<alias>.twig`, depois sem o prefixo `main_`, depois `sections/global/`; páginas institucionais usam `sections/content/`. Um alias sem arquivo é erro explícito.
+- **Páginas e leituras públicas.** Primeiro uma página de cada tipo (home, categoria, produto, institucional, promoção, busca). As coleções, banners e produtos pedidos pelas seções visíveis são lidos uma vez na API pública, sem credenciais, e reproduzidos com filtro por `id[]`, `slug` e `limit`. Uma rota não gravada gera erro com o caminho.
+- **Recursos.** CSS servido e fontes primeiro (WOFF2, `latin` e `latin-ext`), depois logotipo, ícones, banners e produtos. PNG, JPEG, WebP, SVG, CSS e fontes são validados, identificados por SHA-256 e deduplicados. URLs privadas, credenciais em URL, redirecionamentos, tipos desconhecidos e SVG ativo são recusados.
+- **Limites.** 8 páginas, 200 recursos, 12 MiB de recursos, 2 MiB por recurso e por página, 40 leituras públicas (4 MiB) e 15 segundos por leitura.
+- **Diagnóstico.** `preview/report.json` separa código, configuração, contrato, recursos, compilação e visual. `npm run check` compila cada entrada Sass, compara com o CSS publicado e grava `.cache/yampi-check.json` com as seções renderizadas por página. A prévia mostra uma barra quando falta seção, imagem ou fonte, e `/__local/diagnostic.json` traz o mesmo diagnóstico. Uma página que abre com HTTP 200 não prova que a aparência está certa.
+
+A cópia aceita temas de até 3.000 arquivos e 32 MiB, com até 2 MiB por arquivo.
 
 ## Atualizar projetos antigos
 
-Faça uma nova exportação **em outra pasta**. Depois, nesta pasta da extensão:
+Faça uma nova exportação **em outra pasta**. Depois, na pasta deste repositório:
 
 ```powershell
 node scripts/update-project.mjs "C:/caminho/do/projeto" --preview "C:/caminho/nova-exportacao.zip"
@@ -125,11 +155,32 @@ node scripts/update-project.mjs "C:/caminho/do/projeto" --preview "C:/caminho/no
 node scripts/update-project.mjs "C:/caminho/do/projeto" --rollback .yampi-sync/updates/<data> --apply
 ```
 
-O primeiro comando mostra o plano: ferramentas, mudanças em `package.json` e lockfile, arquivos de `preview/` e a migração de `local.data.json`. O segundo aplica; o terceiro desfaz. Somente `.yampi-sync/tools/`, `package.json`, `package-lock.json` e `preview/` são substituídos; `tema/`, originais, manifesto e `local.config.json` são preservados. Um `local.data.json` no formato antigo (cópia completa dos dados) vai para o backup e dá lugar a sobreposições vazias. Dependências próprias do projeto continuam no lockfile; conflitos com as ferramentas são recusados. Ferramentas editadas pelo usuário e links também são recusados. Bytes anteriores e o registro ficam em `.yampi-sync/updates/`; o rollback recusa arquivos alterados depois da atualização. Não executa scripts do projeto nem chama a Yampi. Depois execute `npm ci`, `check:integrity`, `check` e `pack` no projeto atualizado.
+O primeiro comando só mostra o plano; o segundo aplica; o terceiro desfaz. Só `.yampi-sync/tools/`, `package.json`, `package-lock.json` e `preview/` são substituídos; `tema/`, os originais, o manifesto e `local.config.json` ficam como estão. Um `local.data.json` antigo (cópia completa dos dados) vai para o backup e dá lugar a ajustes vazios. Ferramentas editadas à mão, links e dependências em conflito são recusados. O registro e os bytes anteriores ficam em `.yampi-sync/updates/`, e o rollback recusa arquivos alterados depois da atualização. Nada é executado do projeto, e a Yampi não é chamada. Depois, rode `npm ci`, `npm run check:integrity`, `npm run check` e `npm run pack` no projeto.
 
-Sem `--preview`, só ferramentas e pacote mudam; a captura existente é mantida. Prévias capturadas pela 0.3.x são lidas em modo de compatibilidade, com parâmetros e ordem incompletos: faça uma nova exportação.
+Sem `--preview`, só as ferramentas e o pacote mudam. Prévias capturadas pela 0.3.x abrem em modo de compatibilidade, com dados incompletos: faça uma nova exportação.
 
-## Desenvolvimento e validação
+## Privacidade e permissões
+
+Sem telemetria. A extensão só fala com o editor da Yampi aberto na aba em que você clicou e com os endereços públicos que você autorizar.
+
+| Permissão | Uso |
+|---|---|
+| `activeTab`, `scripting` | Ler e operar o editor só na aba em que você clicou no ícone |
+| `sidePanel` | O painel ao lado do editor |
+| `storage` | Sessões e estado das operações em andamento |
+| `downloads` | Baixar o ZIP, os backups e os registros |
+| `offscreen` | Executar as operações com o painel fechado |
+| `notifications` | Avisar o fim de uma operação quando o painel está fechado |
+| `https://*/*` (opcional) | Ler a vitrine e os seus recursos, pedida endereço por endereço e só ao baixar com a vitrine |
+
+- **Pasta do projeto.** O Chrome pede acesso de leitura quando você escolhe a pasta. A única escrita fora da loja é **Usar no projeto**: o Chrome pede permissão de escrita, e só um arquivo de `tema/` que já existe é trocado, se continuar como na comparação. Nada é criado.
+- **Isolamento.** O worker só aceita comandos de um painel ou de uma operação autenticados para aquela aba, confere a loja e o endereço do editor em cada comando e, nas leituras públicas, confere a loja antes e depois, sem cookies, sem redirecionamento e sem referrer.
+- **Dados locais.** Originais, histórico e backups ficam no IndexedDB deste navegador, separados por loja, sem criptografia adicional. ZIPs e backups podem ter conteúdo privado: guarde-os fora deste repositório.
+- **Fontes.** Atkinson Hyperlegible Next e Mono (SIL OFL 1.1) vêm no pacote; nada é carregado da internet. [Licenças](docs/TERCEIROS.md).
+
+## Desenvolvimento
+
+Com Node.js 24:
 
 ```powershell
 npm ci
@@ -141,22 +192,42 @@ npm run audit:performance
 npm run package
 ```
 
-`npm run dev` oferece a demonstração fictícia em `http://127.0.0.1:5181/demo.html?demo=1`. `npm run package` gera uma pasta fixa pronta para carregar em **`releases/zirtuno-sync-yampi/`**, com 23 arquivos permitidos; as próximas execuções atualizam essa mesma pasta. Os ZIPs e hashes ficam em `.cache/package/`: `zirtuno-sync-yampi-<versão>.zip` identifica a versão e `zirtuno-sync-yampi.zip` mantém o link direto do GitHub estável. A pasta local e os pacotes são ignorados pelo Git; no GitHub, o instalador pronto fica em Releases. Preserve a pasta carregada no navegador enquanto usar a extensão. Ícones são redimensionados localmente a partir da logo autorizada, preservando proporções e transparência. Sharp é uma dependência de desenvolvimento e não integra o pacote da extensão. A assinatura exibida em 18 px usa uma versão de 72×72 px gerada de `assets/zirtuno-logo-source.png`; a imagem original permanece somente no código de desenvolvimento. Chrome/Edge com `sidePanel` são necessários; outros navegadores não foram validados. O painel global fica desativado e cada aba exige clique no ícone. Vue 2 é usado por compatibilidade, fora de manutenção; use projetos confiáveis e mantenha o servidor em localhost.
+- `npm run check` roda TypeScript, os testes unitários e o build em `dist/`.
+- `npm run test:e2e` instala a extensão num Chromium temporário, com painel lateral nativo e editor fictício: exportação, envio com o painel fechado no meio, restauração, reconexão e captura da vitrine. Nenhuma requisição chega à Yampi.
+- `npm run test:preview` exporta três lojas fictícias, instala cada projeto com `npm ci` e confere a prévia em Chromium. `npm run test:compression` confere que o ZIP feito em segundo plano é igual ao síncrono e pode ser cancelado. `npm run audit:performance` mede o build num cenário sintético.
+- `npm run dev` abre a demonstração fictícia em `http://127.0.0.1:5181/demo.html?demo=1`.
+- `npm run package` atualiza a pasta pronta para carregar, `releases/zirtuno-sync-yampi/` (23 arquivos permitidos, sempre no mesmo lugar), e gera em `.cache/package/` os ZIPs `zirtuno-sync-yampi-<versão>.zip` e `zirtuno-sync-yampi.zip`, com SHA-256. Essas pastas ficam fora do Git; o instalador público vai em Releases.
 
-Testes cobrem leitura integral, escrita somente fictícia, backup, conflitos, restauração, parser, privacidade e isolamento. Uma loja fictícia no formato real da vitrine (lista de seções com `position`, aliases `main_*`, `window.data.config`, `company`, fontes com subconjuntos, ícones de `$assets`, variantes de imagem e API pública) é exportada, instalada e aberta em Chromium. Duas lojas fictícias, escura/clara, continuam comparadas pixel a pixel. [Resultados e evidências](docs/VALIDACAO.md).
+Os testes usam só lojas e dados fictícios: o editor fictício reproduz a marcação do editor real, e duas vitrines fictícias são comparadas pixel a pixel. Gravação numa loja real nunca entra nos testes automáticos.
 
-Isso não certifica uma loja real. Exportações textuais reais anteriores tiveram hashes internos conferidos fora deste repositório. A captura 0.4.0 ainda não foi executada numa vitrine real; formato real da API além de coleções, banners e produtos, regras exatas do minificador da plataforma, URL de produção de `assets_url`, regeneração de `components.twig` e gravações/restaurações reais continuam sem validação.
+| Onde | O quê |
+|---|---|
+| `src/panel.ts`, `src/panel/` | O painel: telas, pasta do projeto, diferenças por linha e vidro das barras |
+| `src/jobs/engine.ts`, `src/browser/runner.ts` | Operações em segundo plano (baixar, comparar, enviar) no documento offscreen |
+| `src/browser/background.ts` | Worker: sessões por aba, bloqueios, permissões, downloads, ícone e avisos |
+| `src/browser/bridge.ts`, `adapter.ts` | Leitura e gravação no editor da Yampi |
+| `src/core/workflow.ts` | Captura, envio, conferência e retomada |
+| `src/core/planner.ts`, `compare.ts`, `explain.ts` | Comparação original/projeto/loja, leitura parcial e motivos de bloqueio |
+| `src/core/workspace.ts`, `src/storage.ts` | Dados por loja no IndexedDB |
+| `src/core/preview.ts`, `src/browser/preview-capture.ts` | Formato, sanitização e captura da vitrine |
+| `local-runtime/` | Ferramentas do projeto exportado: prévia, contrato, dependências, integridade e retorno |
+| `scripts/` | Build, pacote, testes de ponta a ponta e atualização de projetos |
 
-## Privacidade e arquitetura
+Documentos: [SPEC](docs/SPEC.md) (o contrato do envio), [INTERFACE](docs/INTERFACE.md) (desenho do painel), [VALIDACAO](docs/VALIDACAO.md) (evidências por versão), [JOURNAL](docs/JOURNAL.md) (decisões datadas), [ROADMAP](docs/ROADMAP.md) (o que falta), [INSTALACAO](docs/INSTALACAO.md) e [TERCEIROS](docs/TERCEIROS.md).
 
-Sem telemetria. `activeTab`/`scripting` operam a aba escolhida; o editor é lido explicitamente em `MAIN`, dentro de seu componente. HTTPS é uma permissão **opcional**; a interface solicita somente origens concretas. O worker exige painel/sessão autenticados, lock de leitura, permissão da origem e identidade antes/depois do GET, com `credentials: omit`, `redirect: error` e sem referrer. Nenhum acesso global é concedido automaticamente.
+## Versões
 
-Desde a 0.6.0, `offscreen` permite o documento da extensão que executa as operações com o painel fechado; ele só conversa com o worker, que confere se o pedido vem desse documento e da operação que recebeu o editor. `notifications` mostra o aviso de fim quando o painel está fechado. A pasta do projeto só recebe escrita quando você clica em **Usar no projeto**: o Chrome pede a permissão de escrita, e só um arquivo de `tema/` que já existe é trocado, se ainda estiver como na comparação. As fontes Atkinson Hyperlegible Next e Mono (SIL OFL 1.1) vêm no pacote; nenhuma fonte é carregada da internet.
+- **0.6.0** — Operações em segundo plano com o painel fechado, progresso com tempo restante, retomada de envios interrompidos, envio mais rápido com a mesma conferência e comparação que relê só o que mudou. Painel refeito, com uma tela por etapa, diferenças por linha e bloqueios explicados, além de **Usar no projeto** para trazer uma mudança da loja.
+- **0.5.1** — A conferência de imagens decodifica os endereços `data:` do editor, que a política de segurança da página não deixa baixar.
+- **0.5.0** — Envio automático: textos novos criados pelo **Adicionar arquivo**, imagens novas enviadas pelo editor, conflito resolvido arquivo a arquivo.
+- **0.4.0** — Prévia local fiel à vitrine: contrato único, captura anônima, leituras públicas e diagnóstico. [Relatório](docs/RELATORIO-0.4.0.md).
 
-Originais e histórico ficam em IndexedDB local, separados por loja, sem criptografia adicional. ZIPs podem conter conteúdo privado. A extensão não envia projetos ao GitHub. Mantenha exports/backups fora deste repositório e revise qualquer publicação. [Licenças](docs/TERCEIROS.md).
+As versões anteriores estão no [diário](docs/JOURNAL.md) e no histórico do Git.
 
-`local-runtime/contract.mjs` define o contrato da plataforma e `dependencies.mjs` as dependências do retorno; ambos são usados pela extensão e pelo projeto exportado. `src/core/preview.ts` define formato e sanitização; `src/browser/preview-capture.ts` faz a captura estática, as leituras públicas e a fila de assets; `public-fetch.ts` limita downloads. `local-runtime/` compila e serve a prévia; `scripts/update-project.mjs` atualiza projetos. [ROADMAP.md](docs/ROADMAP.md) mantém capacidades ainda não implementadas.
+## Nome e repositório
 
-O nome interno `yampi-theme-sync` permanece nos formatos de exportação e armazenamento para compatibilidade com projetos e históricos existentes. [Configuração da conta](docs/CHROME-WEB-STORE.md).
+O nome no Chrome e no painel é **Zirtuno Sync Yampi**, e o pacote é `zirtuno-sync-yampi`. O ícone usa a logo fornecida pelo proprietário, cuja versão original está em `assets/zirtuno-sync-yampi-logo.png`. O nome interno `yampi-theme-sync` continua nos formatos de exportação e armazenamento, para abrir projetos e históricos anteriores. As versões são publicadas em [ZIRTUNO/zirtuno-sync-yampi](https://github.com/ZIRTUNO/zirtuno-sync-yampi). O repositório original, [JonathanDelmonte/yampi-virtual-store-code-extractor-synchronizer](https://github.com/JonathanDelmonte/yampi-virtual-store-code-extractor-synchronizer), guarda o histórico até a 0.4.0.
 
-Referências: [editor Yampi](https://docs.yampi.com.br/editor-codigo/intro), [MAIN/ISOLATED](https://developer.chrome.com/docs/extensions/develop/concepts/content-scripts), [cascata CSS](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Cascade/Introduction), [JSON Merge Patch](https://www.rfc-editor.org/rfc/rfc7396), [painel lateral](https://developer.chrome.com/docs/extensions/reference/api/sidePanel).
+Este repositório público contém só a ferramenta e exemplos fictícios. Temas, exportações, backups e dados de lojas ficam fora dele.
+
+Referências: [editor de código da Yampi](https://docs.yampi.com.br/editor-codigo/intro), [painel lateral do Chrome](https://developer.chrome.com/docs/extensions/reference/api/sidePanel), [documentos offscreen](https://developer.chrome.com/docs/extensions/reference/api/offscreen), [File System Access](https://developer.chrome.com/docs/capabilities/web-apis/file-system-access).

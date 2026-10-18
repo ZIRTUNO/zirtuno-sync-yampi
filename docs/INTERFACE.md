@@ -2,7 +2,7 @@
 
 ## Nomes aprovados
 
-O repositório principal continua **JonathanDelmonte/yampi-virtual-store-code-extractor-synchronizer**, assim como a pasta de desenvolvimento existente. O pacote npm usa **zirtuno-sync-yampi**, nome trazido do repositório **ZIRTUNO/zirtuno-sync-yampi** na integração de 15/10/2026.
+O código é integrado e as versões são publicadas em **ZIRTUNO/zirtuno-sync-yampi** (desde a 0.3.5); o repositório original, **JonathanDelmonte/yampi-virtual-store-code-extractor-synchronizer**, guarda o histórico até a 0.4.0. A pasta de desenvolvimento existente continua a mesma. O pacote npm usa **zirtuno-sync-yampi**, nome trazido do repositório **ZIRTUNO/zirtuno-sync-yampi** na integração de 15/10/2026.
 
 Nome de exibição no Chrome e no painel: **Zirtuno Sync Yampi**. Autoria: **Zirtuno**. Descrição: **Edição local e sincronização do código da sua loja Yampi.**
 
@@ -58,6 +58,8 @@ O painel deixou de ser uma página com todas as seções. Cada tela responde a u
 | Progresso em uma linha de texto | Porcentagem, barra, item atual, tempo restante, etapas e registro do que foi conferido | Saber quanto falta e o que já está na loja |
 | Conflito em três blocos de texto | Linhas alteradas, com projeto, original e loja em abas, e a escolha no mesmo lugar | Decidir vendo só a diferença |
 | Fontes do sistema | Atkinson Hyperlegible Next e Mono (SIL OFL 1.1), no pacote | Caminhos e números legíveis; algarismos de largura fixa nas contagens |
+
+A tela inicial mostra as três entradas, na ordem de uso: **Enviar alterações** (destaque), **Baixar tema** e **Histórico e backups** (mais discreta). Fora dela, **‹ Início** volta, e um novo clique no ícone da extensão também; o **…** abre o histórico em qualquer tela. Sem nenhum envio, o histórico mostra uma frase em vez de uma lista vazia e botões desativados.
 
 ### Material
 
