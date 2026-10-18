@@ -76,14 +76,14 @@ Abra http://127.0.0.1:5182: as páginas capturadas abrem pelos mesmos caminhos d
 
 ## Devolver as alterações
 
-Execute \`npm run pack\` e importe o ZIP indicado no terminal em **Enviar alterações** na extensão. Também pode selecionar esta pasta inteira. Confira a comparação e confirme o envio. A publicação continua manual na Yampi.
+Na extensão, escolha **Enviar alterações** e esta pasta inteira, ou solte-a no painel. Também vale o ZIP de \`npm run pack\`, em **Usar um ZIP de retorno**. Confira a comparação e confirme o envio. A publicação continua manual na Yampi.
 
 \`npm run check:integrity -- --original\` confirma que o tema ainda é igual à exportação. \`npm run check:integrity -- --return-zip retorno-yampi.zip\` confere se o ZIP contém exatamente manifesto, originais e \`tema/\`, com os mesmos hashes.
 
 ## Limitações do retorno
 
 - A extensão cria os textos novos (.twig, .vue, .scss) em pastas que já existem na loja e envia as imagens novas, sempre pelo próprio editor da Yampi. A Yampi não permite criar pastas: um texto numa pasta nova bloqueia o envio até ser movido. Imagens ficam direto em \`assets/images\`; as de subpastas vão para lá e as referências literais nos arquivos enviados são ajustadas.
-- Um arquivo modificado que inclui, importa ou usa um caminho que não existirá na loja (Sass, Twig, componente Vue ou imagem) fica bloqueado, com o nome dos dois. Arquivos alterados que dependem uns dos outros são enviados juntos, inclusive os novos. Cada arquivo é conferido após recarregar o editor antes do próximo envio.
+- Um arquivo modificado que inclui, importa ou usa um caminho que não existirá na loja (Sass, Twig, componente Vue ou imagem) fica bloqueado, com o nome dos dois. Arquivos alterados que dependem uns dos outros são enviados juntos, inclusive os novos. Cada texto é conferido após recarregar o editor, antes do próximo; os arquivos criados e as imagens, em grupo, antes dos textos.
 - \`elements/scripts/components.twig\` é gerado pela Yampi, que lista cada componente criado pela extensão; ele nunca é enviado. Na prévia local, um \`.vue\` fora dessa lista não é carregado; a prévia avisa e não o registra (use \`"components": {"registerUnlisted": true}\` em \`local.config.json\` apenas para testes locais).
 - \`assets_url\` e \`asset()\` apontam para \`tema/assets/\` na prévia. O caminho de produção não foi verificado.
 - Alterações só de espaço em branco aparecem separadas na comparação e podem ser descartadas.

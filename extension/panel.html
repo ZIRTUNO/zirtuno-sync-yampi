@@ -16,7 +16,7 @@
     <symbol id="i-more" viewBox="0 0 16 16"><path d="M3.2 8h.01M8 8h.01M12.8 8h.01"/></symbol>
   </svg>
   <header id="topbar" class="bar top">
-    <button id="back" class="bar-button" aria-label="Voltar ao início" hidden><svg class="glyph"><use href="#i-back"/></svg></button>
+    <button id="back" class="bar-button back" aria-label="Voltar ao início" hidden><svg class="glyph"><use href="#i-back"/></svg><span aria-hidden="true">Início</span></button>
     <span class="light" aria-hidden="true"></span>
     <span id="store" class="store">Conectando…</span>
     <span id="connection-state" class="sr-only">Aguardando conexão</span>
@@ -37,7 +37,7 @@
       </div>
       <button id="mode-import" class="tile primary-tile"><span class="tile-body"><span class="tile-title">Enviar alterações</span><span id="send-tile-text" class="tile-text">Do seu projeto para a loja</span></span><svg class="glyph"><use href="#i-next"/></svg></button>
       <button id="mode-export" class="tile"><span class="tile-body"><span class="tile-title">Baixar tema</span><span class="tile-text">Uma cópia do código em ZIP</span></span><svg class="glyph"><use href="#i-next"/></svg></button>
-      <p id="last-send" class="aside" hidden></p>
+      <button id="mode-history" class="tile quiet" aria-haspopup="dialog"><span class="tile-body"><span class="tile-title">Histórico e backups</span><span id="history-tile-text" class="tile-text">Desfazer um envio, baixar backups</span></span><svg class="glyph"><use href="#i-next"/></svg></button>
     </section>
 
     <section id="export-section" class="view" aria-label="Baixar tema" hidden>
@@ -154,9 +154,9 @@
   </div>
   <div id="menu-sheet" class="sheet" role="dialog" aria-modal="true" aria-labelledby="menu-title" hidden>
     <div class="sheet-head"><h2 id="menu-title" class="sheet-title">Histórico e backups</h2><button id="close-menu" class="bar-button" aria-label="Fechar"><svg class="glyph"><use href="#i-x"/></svg></button></div>
-    <label class="field">Envio<select id="history" aria-label="Envio para recuperar"></select></label>
+    <label id="history-field" class="field">Envio<select id="history" aria-label="Envio para recuperar"></select></label>
     <p id="journal-info" class="aside">Nenhum envio nesta instalação.</p>
-    <div class="menu-actions">
+    <div id="history-actions" class="menu-actions">
       <button id="restore" class="button" disabled>Restaurar este envio</button>
       <button id="download-backup" class="button" disabled>Baixar o backup</button>
       <button id="download-journal" class="button" disabled>Baixar o registro</button>

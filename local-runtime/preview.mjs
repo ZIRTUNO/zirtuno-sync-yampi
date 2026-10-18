@@ -158,7 +158,7 @@ export async function checkIntegrity(root, {original = false, returnZip} = {}) {
     originalFiles: project.manifest.files.length, localFiles: Object.keys(project.files).length,
     modified: modified.length, added: added.length, removed: removed.length, modifiedFiles: modified.slice(0, 50), addedFiles: added.slice(0, 50), removedFiles: removed.slice(0, 50),
     originalIntegrity: 'SHA-256 e tamanho conferidos', codeCompleteness: 'Inventário estável do editor; sem auditoria independente do inventário remoto',
-    newFiles: added.length ? 'Arquivos adicionados não são enviados pela extensão; arquivos que dependem deles ficam bloqueados no envio.' : 'nenhum',
+    newFiles: added.length ? 'A extensão cria os textos novos em pastas que já existem na loja e envia as imagens novas para assets/images; um texto numa pasta nova bloqueia o envio.' : 'nenhum',
     returnZip: zip, previewSource: preview?.source ?? null, previewFormat: preview?.version ?? null, previewError: previewError ?? null,
     capturedAssets: preview ? Object.keys(preview.assets).length : 0, issues: preview?.issues ?? [], visual: 'not-validated'
   };

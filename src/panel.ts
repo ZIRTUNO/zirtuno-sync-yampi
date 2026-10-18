@@ -188,8 +188,7 @@ function renderHome(): void {
   $('resume-card').hidden = !resumable;
   if (resumable) $('resume-text').textContent = `Parou em ${resumable.verified.length + (resumable.uploaded?.length || 0)} de ${resumable.selected.length} itens${resumable.error ? `: ${resumable.error}` : '.'} O que já foi conferido continua na loja.`;
   const last = history.find(item => item.status === 'completed');
-  $('last-send').hidden = !last || !!resumable;
-  if (last) $('last-send').textContent = `Último envio em ${dateTime(last.startedAt)}: ${plural(last.verified.length + (last.uploaded?.length || 0), 'item conferido', 'itens conferidos')}. Histórico e backups ficam no menu.`;
+  $('history-tile-text').textContent = last ? `Último envio em ${dateTime(last.startedAt)}: ${plural(last.verified.length + (last.uploaded?.length || 0), 'item', 'itens')}. Desfazer ou baixar o backup.` : 'Nenhum envio ainda. Backups e restauração aparecem aqui.';
 }
 function renderExport(): void {
   const base = workspace?.baseline;
@@ -567,7 +566,9 @@ $('diff-copy-store').addEventListener('click', () => {
 });
 $('sheet-scrim').addEventListener('click', closeAll);
 document.addEventListener('keydown', event => {if (event.key === 'Escape') closeAll();});
-$('menu').addEventListener('click', () => {updateHistory(); journalInfo(); controls(); openSheet('menu-sheet');});
+function openMenu(): void {updateHistory(); journalInfo(); controls(); openSheet('menu-sheet');}
+$('menu').addEventListener('click', openMenu);
+$('mode-history').addEventListener('click', openMenu);
 $('close-menu').addEventListener('click', () => closeSheet('menu-sheet'));
 // --- Jobs -------------------------------------------------------------------------------------------
 const newId = () => crypto.randomUUID();
@@ -773,7 +774,9 @@ $('open-preview').addEventListener('click', () => {
 });
 // --- History and recovery ---------------------------------------------------------------------------
 function journalInfo(): void {
-  $('journal-info').textContent = journal ? `${journal.verified.length + (journal.uploaded?.length || 0)} de ${journal.selected.length} itens conferidos. ${journal.status === 'completed' ? 'Concluído' : 'Interrompido'} em ${dateTime(journal.startedAt)}.${journal.scope === 'restore' ? ' Foi uma restauração.' : ''}` : 'Nenhum envio nesta instalação.';
+  // Before the first send there is nothing to pick or restore: one sentence says what will appear.
+  $('history-field').hidden = $('history-actions').hidden = !history.length;
+  $('journal-info').textContent = !history.length ? 'Nenhum envio ainda. Depois de cada envio, o backup, o registro e a opção de desfazer ficam aqui.' : journal ? `${journal.verified.length + (journal.uploaded?.length || 0)} de ${journal.selected.length} itens conferidos. ${journal.status === 'completed' ? 'Concluído' : 'Interrompido'} em ${dateTime(journal.startedAt)}.${journal.scope === 'restore' ? ' Foi uma restauração.' : ''}` : 'Nenhum envio nesta instalação.';
 }
 function updateHistory(): void {
   const picker = $<HTMLSelectElement>('history'); picker.replaceChildren();
@@ -876,9 +879,9 @@ async function connect(): Promise<void> {
 }
 $('retry').addEventListener('click', () => void connect());
 if (!isDemo && editorTab) chrome.runtime.onMessage.addListener(incoming => {
-  // A click on the toolbar icon inside the editor means: download the theme.
+  // A click on the extension icon brings back the start screen, with every option on it.
   if (incoming?.editorClicked !== connection?.token || busy || active(job)) return;
-  if (!connected) void connect(); else go('export');
+  if (!connected) void connect(); else go('home');
 });
 render();
 if (isDemo || editorTab) await connect();
