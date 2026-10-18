@@ -113,3 +113,9 @@ Ao abrir a 0.6.0 na loja real, o proprietário caiu direto em **Baixar o tema** 
 - A seta virou **‹ Início**. Sem envios, o histórico mostra uma frase em vez de uma lista vazia.
 
 Na revisão do README, os links de download apontavam para o repositório original, cuja última versão publicada é a 0.4.0; as versões novas saem em `ZIRTUNO/zirtuno-sync-yampi`. README, INSTALACAO e o `homepage_url` do manifesto passaram a apontar para lá. O README foi reescrito em torno do uso (instalar, baixar, editar, enviar, recuperar), com o estado da validação e as limitações à vista. Duas mensagens antigas do projeto exportado também foram corrigidas: a integridade dizia que arquivos novos não são enviados, e o README do projeto dizia que cada arquivo é conferido um a um.
+
+## 18/10/2026 — Versão 0.6.0 publicada e documentação atualizada
+
+A v0.6.0 foi publicada como a versão mais recente, com o nome de arquivo estável que o README usa; a 0.5.1 só tinha o arquivo com a versão no nome, e o link direto respondia 404. O proprietário informou que validou a 0.6.0 manualmente.
+
+O README passou a apresentar o produto: imagem do painel em tema claro e escuro, instalação, uso, segurança, limitações, estado e privacidade. O conteúdo técnico saiu da página inicial sem se perder: a estrutura do projeto exportado, a prévia e a captura foram para [PREVIA.md](PREVIA.md), e o atualizador de projetos para [ATUALIZAR-PROJETO.md](ATUALIZAR-PROJETO.md). INSTALACAO, que vai no pacote como `INSTRUCOES.md`, foi reescrita para a versão atual, sem as notas de atualização da 0.2 e da 0.3. As imagens vêm da demonstração, com a loja fictícia.
